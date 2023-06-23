@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generar Factura</title>
+</head>
+<body>
+    <h1>Generar Factura</h1>
+    <form action="" method="post">
+        <h2>Datos de emisor</h2>
+        <label for="rfcEmisor">RFC del emisor:</label>
+        <input type="text" name="rfcEmisor" id="rfcEmisor" placeholder="RFC del emisor" required>
+        <br>
+        <label for="nombreEmisor">Nombre del emisor:</label>
+        <input type="text" name="nombreEmisor" id="nombreEmisor" placeholder="Nombre del emisor" required>
+        <br>
+        <h2>Datos de receptor</h2>
+        <label for="rfcReceptor">RFC del receptor:</label>
+        <input type="text" name="rfcReceptor" id="rfcReceptor" placeholder="RFC del receptor" required>
+        <br>
+        <label for="nombreReceptor">Nombre del receptor:</label>
+        <input type="text" name="nombreReceptor" id="nombreReceptor" placeholder="Nombre del receptor" required>
+        <br>
+        <label for="codigoPostalReceptor">Codigo postal del receptor</label>
+        <input type="number" name="codigoPostalReceptor" id="codigoPostalReceptor" placeholder="Codigo postal del receptor" required>
+        <br>
+        <label for="regimenFiscalReceptor">Regimen fical del receptor</label>
+        <input type="text" name="regimenFiscalReceptor" id="regimenFiscalReceptor" placeholder="Regimen fiscal del receptor" required>
+        <br>
+        <h2>Datos de emision</h2>
+        <label for="usoCFDI">Uso CFDI:</label>
+        <input type="text" name="usoCFDI" id="usoCFDI" placeholder="Uso CFDI" required>
+        <br>
+        <label for="folioFiscal">Folio fiscal:</label>
+        <input type="text" name="folioFiscal" id="folioFiscal" placeholder="Folio fiscal" required>
+        <br>
+        <label for="noSerie">No. de Serie del CSD:</label>
+        <input type="number" name="noSerie" id="noSerie" placeholder="No. de Serie del CSD" required>
+        <br>
+        <label for="codigoPostalEmision">Codigo postal de emision:</label>
+        <input type="number" name="codigoPostalEmision" id="codigoPostalEmision" placeholder="Codigo postal de emision" required>
+        <br>
+        <label for="fechaYHora">Fecha y hora de emision:</label>
+        <input type="datetime-local" name="fechaYHora" id="fechaYHora" placeholder="Fecha y hora de emision" required>
+        <br>
+        <label for="efectoComprobante">Efecto de comprobante:</label>
+        <input type="text" name="efectoComprobante" id="efectoComprobante" placeholder="Efecto de comprobante" required>
+        <br>
+        <label for="regimenFiscal">Regimen fiscal:</label>
+        <input type="text" name="regimenFiscal" id="regimenFiscal" placeholder="Regimen fiscal" required>
+        <br>
+        <label for="exportacion">Exportacion:</label>
+        <input type="text" name="exportacion" id="exportacion" placeholder="Exportacion" required>
+        <br>
+        <h2>Conceptos</h2>
+        <label for="claveProdServ">Clave de producto o servicio:</label>
+        <input type="text" name="claveProdServ" id="claveProdServ" placeholder="Clave de producto o servicio" required>
+        <br>
+        <label for="noIdentificacion">No. de identificacion (opcional):</label>
+        <input type="text" name="noIdentificacion" id="noIdentificacion" placeholder="No. de identificacion (opcional)">
+        <br>
+        <label for="claveUnidad">Clave de unidad:</label>
+        <input type="text" name="claveUnidad" id="claveUnidad" placeholder="Clave de unidad" required>
+        <br>
+        <label for="unidad">Unidad:</label>
+        <input type="text" name="unidad" id="unidad" placeholder="Unidad" required>
+        <br>
+        <label for="valorUnitario">Valor unitario:</label>
+        <input type="number" name="valorUnitario" id="valorUnitario" placeholder="Valor unitario" required>
+        <br>
+        <label for="importe">Importe:</label>
+        <input type="number" name="importe" id="importe" placeholder="Importe" required>
+        <br>
+        <label for="desuento">Descuento:</label>
+        <input type="number" name="descuento" id="descuento" placeholder="Descuento">
+        <br>
+        <label for="objetoImpuesto">Objeto de impuesto:</label>
+        <input type="text" name="objetoImpuesto" id="objetoImpuesto" placeholder="Objeto de impuesto" required>
+        <br>
+        <label for="rfcProveedorCertificacion">RFC del proveedor de certificacion:</label>
+        <input type="text" name="rfcProveedorCertificacion" id="rfcProveedorCertificacion" placeholder="RFC del proveedor de certificacion" required>
+        <br>
+        <label for="noCertificadoSAT">No. de certificado del SAT:</label>
+        <input type="number" name="noCertificadoSAT" id="noCertificadoSAT" placeholder="No. de certificado del SAT" required>
+        <br>
+        <label for="descripcion">Descripcion:</label>
+        <input type="text" name="descripcion" id="descripcion" placeholder="Descripcion" required>
+        <br>
+        <label for="moneda">Moneda:</label>
+        <input type="text" name="moneda" id="moneda" placeholder="Moneda" required>
+        <br>
+        <label for="formaPago">Forma de pago:</label>
+        <input type="text" name="formaPago" id="formaPago" placeholder="Forma de pago" required>
+        <br>
+        <label for="metodoPago">Metodo de pago:</label>
+        <input type="text" name="metodoPago" id="metodoPago" placeholder="Metodo de pago" required>
+        <br>
+        <label for="selloDigitalCFDI">Sello digital del CFDI:</label>
+        <input type="text" name="selloDigitalCFDI" id="selloDigitalCFDI" placeholder="Sello digital del CFDI" required>
+        <br>
+        <label for="selloDigitalSAT">Sello digital del SAT:</label>
+        <input type="text" name="selloDigitalSAT" id="selloDigitalSAT" placeholder="Sello digital del SAT" required>
+        <br>
+        <label for="cadenaOriginalComplemento">Cadena original del complemento de certificacion digital del SAT:</label>
+        <input type="text" name="cadenaOriginalComplemento" id="cadenaOriginalComplemento" placeholder="Cadena original del complemento de certificacion digital del SAT" required>
+        <br>
+        <label for="objetoImpuesto">Objeto impuesto:</label>
+        <input type="text" name="objetoImpuesto" id="objetoImpuesto" placeholder="Objeto impuesto" required>
+        <br>
+        <input type="submit" value="Generar">
+
+
+
+    </form>
+</body>
+</html>

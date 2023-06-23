@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso con Contraseña</title>
+</head>
+<body>
+    <h1>Acceso por Contraseña</h1>
+    <form action="validarUsuario.php" method="post">
+        <label for="RFC">RFC: </label>
+        <input type="text" name="RFC" id="RFC" placeholder="RFC" required>
+        <br>
+        <label for="contrasena">Contraseña: </label>
+        <input type="password" name="contrasena" id="contrasena" placeholder="Contraseña" required>
+        <br>
+        <label for="efirma">e.firma portable: </label>
+        <input type="file" name="efirma" id="efirma" placeholder="Clave dinámica" disabled>
+        <br> 
+        <input type="submit" value="Enviar">
+    </form>
+    <br>
+    <a href="accesoEfirma.html">Acceso por e.firma</a>
+</body>
+</html>
