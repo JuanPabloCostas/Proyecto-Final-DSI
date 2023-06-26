@@ -60,10 +60,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($resultado) {
             $consulta = "INSERT INTO comprobante_conceptos (id_comprobante,claveProdServ) values ('$ultimoID','$claveProdServ');";
             $resultado = Ejecutar($conexion, $consulta);
+
+            $sql = "SELECT * FROM vistaXML WHERE id_comprobante = '$ultimoID'";
+            $resultado = Ejecutar($conexion, $sql);
+            $resultXML =mysqli_fetch_array($resultado, MYSQLI_ASSOC);
+
+            $sql = "SELECT * FROM vistaPDF WHERE id_comprobante = '$ultimoID';";
+            $result = Ejecutar($conexion, $sql);
+            $resultPDF =mysqli_fetch_array($result, MYSQLI_ASSOC);
             include("generaXML.php");
             include("generaPDF.php");
-            crearXML($ultimoID);
-            crearPDF($ultimoID);
+            crearXML($resultXML);
+            crearPDF($resultPDF);
 
         }
     }

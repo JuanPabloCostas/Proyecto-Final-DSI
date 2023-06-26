@@ -1,11 +1,5 @@
 <?php
-function crearXML($ultimo_id){
-include("conexion.php");
-$con = Conectar();
-$sql = "SELECT * FROM vistaXML WHERE id_comprobante = ultimo_id";
-$resultado = Ejecutar($con, $sql);
-$result =mysqli_fetch_array($resultado, MYSQLI_ASSOC);
-Desconectar($con);
+function crearXML($registro){
 
 // Create a new DOMDocument object
 $doc = new DOMDocument();
@@ -47,14 +41,14 @@ $comprobante->appendChild($receptor);
 // Create and append the 'cfdi:Conceptos' element
 $conceptos = $doc->createElement("cfdi:Conceptos");
 $concepto = $doc->createElement("cfdi:Concepto");
-$concepto->setAttribute("ClaveProdServ", $result['claveProdServ_Concepto']?? "");
-$concepto->setAttribute("Cantidad", $result['cantidad_Concepto']?? "");
-$concepto->setAttribute("ClaveUnidad", $result['claveUnidad_Concepto']?? "");
-$concepto->setAttribute("Unidad", $result['unidad_Concepto']?? "");
-$concepto->setAttribute("Descripcion", $result['descripcion_Concepto']?? "");
-$concepto->setAttribute("ValorUnitario", $result['valorUnitario_Concepto']?? "");
-$concepto->setAttribute("Importe", $result['importe_Concepto']?? "");
-$concepto->setAttribute("ObjetoImp", $result['objetoImp_Concepto']?? "");
+$concepto->setAttribute("ClaveProdServ", $registro['claveProdServ_Concepto']?? "");
+$concepto->setAttribute("Cantidad", $registro['cantidad_Concepto']?? "");
+$concepto->setAttribute("ClaveUnidad", $registro['claveUnidad_Concepto']?? "");
+$concepto->setAttribute("Unidad", $registro['unidad_Concepto']?? "");
+$concepto->setAttribute("Descripcion", $registro['descripcion_Concepto']?? "");
+$concepto->setAttribute("ValorUnitario", $registro['valorUnitario_Concepto']?? "");
+$concepto->setAttribute("Importe", $registro['importe_Concepto']?? "");
+$concepto->setAttribute("ObjetoImp", $registro['objetoImp_Concepto']?? "");
 $conceptos->appendChild($concepto);
 $comprobante->appendChild($conceptos);
 
@@ -83,7 +77,7 @@ $xmlString = $doc->saveXML();
 $formattedXmlString = preg_replace('/></', ">\n<", $xmlString);
 
 // Create a new XML file
-$nombreArchivo = $result['id_comprobante'] . ".xml";
+$nombreArchivo = $registro['id_comprobante'] . ".xml";
 file_put_contents($nombreArchivo, $formattedXmlString);
 }
 ?>

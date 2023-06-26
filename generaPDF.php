@@ -1,11 +1,6 @@
 <?php
-function crearPDF($ultimo_id){
-    include("conexion.php");
-    $con = Conectar();
-    $sql = "SELECT * FROM vistaPDF WHERE id_comprobante = $ultimo_id;";
-    $result = Ejecutar($con, $sql);
-    $registro =mysqli_fetch_array($result, MYSQLI_ASSOC);
-    Desconectar($con);
+function crearPDF($registro){
+    
     require('fpdf.php');//Invoca a la library
 
     $pdf = new FPDF('P','cm',array(21,29.7)); //Constructor
