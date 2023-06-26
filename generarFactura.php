@@ -59,8 +59,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $resultado = Ejecutar($conexion, $consulta);
         if ($resultado) {
             $consulta = "INSERT INTO comprobante_conceptos (idComprobante,claveProdServ) values ('$ultimoID','$claveProdServ');";
+            $resultado = Ejecutar($conexion, $consulta);
         }
     }
+
+    Desconectar($conexion);
     
 
 

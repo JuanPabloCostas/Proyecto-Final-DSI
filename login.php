@@ -108,6 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <label for="archivoKey">e.firma (.key):</label>
     <input type="file" id="archivoKey" name="archivoKey" required><br>
+    <br>
 
 
     <button type="submit">Iniciar sesión</button>

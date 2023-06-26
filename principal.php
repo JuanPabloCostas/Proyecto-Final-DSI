@@ -10,6 +10,7 @@ if (!isset($_SESSION['user_id'])) {
 // Obtener el id del usuario almacenado en la sesión
 $user_id = $_SESSION['user_id'];
 $user_rfc = $_SESSION['rfc'];
+$tipo_usuario = $_SESSION['tipo_usuario'];
 
 // Aquí puedes mostrar el contenido de la página principal
 ?>
@@ -37,15 +38,14 @@ $user_rfc = $_SESSION['rfc'];
 
 
   <h1>Bienvenido a la página principal</h1>
-  <p>Contenido restringido solo para usuarios autenticados.</p>
+  <?php if ($tipo_usuario == "U") { ?>
+          <p>Has accedido como Usuario</p>
+        <?php } else { ?>
+          <p>Has accedido como Administrador</p>
+        <?php } ?>
 
 
 
-  <!-- Boton para ir a la pagina de generar factura -->
-  <a href="generarFactura.php">Generar factura</a>
-  <a href="cancelarFactura.php">Cancelar factura</a>
-  <a href="consultarFactura.php">Consultar factura</a>
 
-  <a href="logout.php">Cerrar sesión</a>
 </body>
 </html>
