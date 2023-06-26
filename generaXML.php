@@ -1,5 +1,5 @@
 <?php
-include("Controlador.php");
+include("conexion.php");
 $con = Conectar();
 $sql = "SELECT * FROM vistaXML WHERE id_comprobante = 16";
 $resultado = Ejecutar($con, $sql);

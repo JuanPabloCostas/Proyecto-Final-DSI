@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $consulta = "INSERT INTO conceptos (claveProdServ,noIdentificacion,claveUnidad,unidad,valorUnitario,importe,descuento,objetoImp,rfcProveedorCertificacion,descripcion,cantidad) values ('$claveProdServ','$noIdentificacion','$claveUnidad','$unidad','$valorUnitario','$importe','$descuento','$objetoImpuesto','$rfcProveedorCertificacion','$descripcion','$cantidad');";
         $resultado = Ejecutar($conexion, $consulta);
         if ($resultado) {
-            $consulta = "INSERT INTO comprobante_conceptos (idComprobante,claveProdServ) values ('$ultimoID','$claveProdServ');";
+            $consulta = "INSERT INTO comprobante_conceptos (id_comprobante,claveProdServ) values ('$ultimoID','$claveProdServ');";
             $resultado = Ejecutar($conexion, $consulta);
         }
     }
