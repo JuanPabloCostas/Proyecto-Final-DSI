@@ -18,12 +18,24 @@ $user_rfc = $_SESSION['rfc'];
 <html>
 <head>
   <title>Página principal</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<nav class="navbar">
+    <?php if (isset($user_rfc)) { ?>
+      <p class="rfc">Bienvenido, <?php echo $user_rfc; ?></p>
+    <?php } ?>
+  <ul>
+    <li><a href="generarFactura.php">Generar factura</a></li>
+    <li><a href="cancelarFactura.php">Cancelar factura</a></li>
+    <li><a href="consultarFactura.php">Consultar factura</a></li>
+    <li class="right"><a href="logout.php">Cerrar sesión</a></li>
+  </ul>
+  
+</nav>
 
-<?php if (isset($user_rfc)) { ?>
-    <p>Bienvenido, <?php echo $user_rfc; ?></p>
-  <?php } ?>
+
+
   <h1>Bienvenido a la página principal</h1>
   <p>Contenido restringido solo para usuarios autenticados.</p>
 

@@ -75,12 +75,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
   <title>Generar Factura</title>
+  
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<?php if (isset($user_rfc)) { ?>
-    <p>Bienvenido, <?php echo $user_rfc; ?></p>
-  <?php } ?>
+<nav class="navbar">
+    <?php if (isset($user_rfc)) { ?>
+      <p class="rfc">Bienvenido, <?php echo $user_rfc; ?></p>
+    <?php } ?>
+  <ul>
+    <li><a href="generarFactura.php">Generar factura</a></li>
+    <li><a href="cancelarFactura.php">Cancelar factura</a></li>
+    <li><a href="consultarFactura.php">Consultar factura</a></li>
+    <li class="right"><a href="logout.php">Cerrar sesión</a></li>
+  </ul>
+  
+</nav>
+
+
   <h1>Generar Factura</h1>
     <form action="" method="post">
         <h2>Datos de emisor</h2>
@@ -170,9 +183,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label for="subtotal">Subtotal:</label>
         <input type="number" name="subtotal" id="subtotal" placeholder="Subtotal" required>
         <br>
-        <input type="submit" value="Generar">
+        <br>
+        <input class="button-submit" type="submit" value="Generar">
     </form>
-    <!-- boton para regresar cerrar sesion -->
-    <a href="logout.php">Cerrar sesión</a>
 </body>
 </html>

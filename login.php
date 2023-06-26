@@ -90,6 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
   <title>Iniciar sesión</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Iniciar sesión</h1>

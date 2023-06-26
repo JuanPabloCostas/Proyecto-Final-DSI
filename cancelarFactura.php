@@ -38,24 +38,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="style.css">
   <title>Página principal</title>
 </head>
 <body>
+<nav class="navbar">
+    <?php if (isset($user_rfc)) { ?>
+      <p class="rfc">Bienvenido, <?php echo $user_rfc; ?></p>
+    <?php } ?>
+  <ul>
+    <li><a href="generarFactura.php">Generar factura</a></li>
+    <li><a href="cancelarFactura.php">Cancelar factura</a></li>
+    <li><a href="consultarFactura.php">Consultar factura</a></li>
+    <li class="right"><a href="logout.php">Cerrar sesión</a></li>
+  </ul>
+  
+</nav>
 
-<?php if (isset($user_rfc)) { ?>
-    <p>Bienvenido, <?php echo $user_rfc; ?></p>
-  <?php } ?>
+
   <h2>Eliminar Factura</h2>
   <form action="" method="post">
     <label for="idComprobante">ID del comprobante:</label>
     <input type="number" name="idComprobante" id="idComprobante" placeholder="ID del comprobante" required>
     <br>
+    <br>
     <button type="submit">Eliminar</button>
   </form>
-
-  <!-- Boton para ir a la pagina de generar factura -->
-  <a href="generarFactura.php">Generar factura</a>
-
-  <a href="logout.php">Cerrar sesión</a>
 </body>
 </html>

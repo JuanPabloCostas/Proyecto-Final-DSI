@@ -37,7 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "<th>RFC Receptor</th>";
             echo "<th>Fecha</th>";
             echo "<th>Subtotal</th>";
-            echo "<th>Descargar</th>";
+            echo "<th>Descargar PDF</th>";
+            echo "<th>Descargar XML</th>";
             echo "</tr>";
             while ($fila = mysqli_fetch_array($resultado)) {
                 echo "<tr>";
@@ -45,7 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo "<td>" . $fila['rfc_Receptor'] . "</td>";
                 echo "<td>" . $fila['fecha'] . "</td>";
                 echo "<td>" . $fila['subtotal'] . "</td>";
-                echo "<td><a href='files/{$fila['id_comprobante']}.pdf' download>Descargar</a></td>";
+                echo "<td><a href='files/{$fila['id_comprobante']}.pdf' download>Descargar PDF</a></td>";
+                echo "<td><a href='files/{$fila['id_comprobante']}.xml' download>Descargar XML</a></td>";
                 echo "</tr>";
             }
             echo "</table>";
@@ -65,13 +67,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
   <title>Página principal</title>
-  
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<?php if (isset($user_rfc)) { ?>
-    <p>Bienvenido, <?php echo $user_rfc; ?></p>
-  <?php } ?>
+<nav class="navbar">
+    <?php if (isset($user_rfc)) { ?>
+      <p class="rfc">Bienvenido, <?php echo $user_rfc; ?></p>
+    <?php } ?>
+  <ul>
+    <li><a href="generarFactura.php">Generar factura</a></li>
+    <li><a href="cancelarFactura.php">Cancelar factura</a></li>
+    <li><a href="consultarFactura.php">Consultar factura</a></li>
+    <li class="right"><a href="logout.php">Cerrar sesión</a></li>
+  </ul>
+  
+</nav>
   <h1>Consultar Factura</h1>
   <form action="" method="post">
     <label for="filtro">Filtro:</label>
@@ -85,6 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <label for="fecha">Fecha:</label>
     <input type="date" name="fecha" id="fecha" placeholder="Fecha" >
     <br>
+    <br>
     <button type="submit">Consultar</button>
 
 
@@ -92,9 +104,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
   <!-- Boton para ir a la pagina de generar factura -->
-  <a href="generarFactura.php">Generar factura</a>
-  <a href="cancelarFactura.php">Cancelar factura</a>
 
-  <a href="logout.php">Cerrar sesión</a>
 </body>
 </html>
