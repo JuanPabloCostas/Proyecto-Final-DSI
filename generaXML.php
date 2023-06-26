@@ -1,7 +1,9 @@
 <?php
-include("Controlador.php");
+
+function crearXML($ultimo_id){
+include("conexion.php");
 $con = Conectar();
-$sql = "SELECT * FROM vistaXML WHERE id_comprobante = 16";
+$sql = "SELECT * FROM vistaXML WHERE id_comprobante = ultimo_id";
 $resultado = Ejecutar($con, $sql);
 $result =mysqli_fetch_array($resultado, MYSQLI_ASSOC);
 Desconectar($con);
@@ -84,4 +86,5 @@ $formattedXmlString = preg_replace('/></', ">\n<", $xmlString);
 // Create a new XML file
 $nombreArchivo = $result['id_comprobante'] . ".xml";
 file_put_contents($nombreArchivo, $formattedXmlString);
+}
 ?>

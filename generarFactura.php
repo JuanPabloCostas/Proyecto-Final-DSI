@@ -60,6 +60,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($resultado) {
             $consulta = "INSERT INTO comprobante_conceptos (idComprobante,claveProdServ) values ('$ultimoID','$claveProdServ');";
             $resultado = Ejecutar($conexion, $consulta);
+            include("generaXML.php");
+            crearXML($ultimoID);
+
         }
     }
 
