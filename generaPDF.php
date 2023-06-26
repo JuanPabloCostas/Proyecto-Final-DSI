@@ -1,7 +1,7 @@
 <?php
 
 function crearPDF($ultimo_id){
-    include("Controlador.php");
+    include("conexion.php");
     $con = Conectar();
     $sql = "SELECT * FROM vistaPDF WHERE id_comprobante = ultimo_id;";
     $result = Ejecutar($con, $sql);
