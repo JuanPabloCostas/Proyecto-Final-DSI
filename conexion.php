@@ -3,7 +3,7 @@ function Conectar(){
     $Server = "localhost";
     $User = "root";
     $Pws = "";
-    $BD = "controlvehicular30 f";
+    $BD = "facturas";
     $Con = mysqli_connect($Server, $User, $Pws, $BD);
     return $Con; // Va a retornar un objeto
 }

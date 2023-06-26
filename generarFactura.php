@@ -1,54 +1,113 @@
+<?php
+include("conexion.php");
+session_start();
+
+// Verificar si el usuario no ha iniciado sesión y redirigirlo a la página de inicio de sesión
+if (!isset($_SESSION['user_id'])) {
+  header("Location: login.php");
+  exit();
+}
+
+// Obtener el id del usuario almacenado en la sesión
+$user_id = $_SESSION['user_id'];
+$user_rfc = $_SESSION['rfc'];
+$tipo_usuario = $_SESSION['tipo_usuario'];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $conexion = Conectar();
+    
+    // Obtener los valores ingresados por el usuario
+    $rfcEmisor = $_POST['rfcEmisor']; //a
+    // print_r($rfcEmisor);
+    // print_r($_POST);
+    $rfcReceptor = $_POST['rfcReceptor']; //a
+    $folioFiscal = $_POST['folioFiscal']; //a
+    $noSerie = $_POST['noSerie']; //a
+    $fechaYHora = $_POST['fechaYHora']; //a
+    $efectoComprobante = $_POST['efectoComprobante']; //a
+    $exportacion = $_POST['exportacion']; //a
+    $noCertificadoSAT = $_POST['noCertificadoSAT']; //a
+    $moneda = $_POST['moneda'];
+    $formaPago = $_POST['formaPago'];
+    $metodoPago = $_POST['metodoPago'];
+    $selloDigitalCFDI = $_POST['selloDigitalCFDI'];
+    $selloDigitalSAT = $_POST['selloDigitalSAT'];
+    $cadenaOriginalComplemento = $_POST['cadenaOriginalComplemento'];
+    $subtotal = $_POST['subtotal'];
+
+    $claveProdServ = $_POST['claveProdServ']; //c
+    $noIdentificacion = $_POST['noIdentificacion']; //c
+    $cantidad = $_POST['cantidad']; //c
+    $claveUnidad = $_POST['claveUnidad']; //c
+    $unidad = $_POST['unidad']; //c
+    $valorUnitario = $_POST['valorUnitario']; //c
+    $importe = $_POST['importe']; //c
+    $descuento = $_POST['descuento']; //c
+    $objetoImpuesto = $_POST['objetoImpuesto']; //c
+    $rfcProveedorCertificacion = $_POST['rfcProveedorCertificacion']; //c
+    $descripcion = $_POST['descripcion']; //c
+    
+
+    // Insertamos los datos en la base de datos
+    // Insertamos los datos en la tabla comprobante (los que tienen //a)
+    $consulta = "INSERT INTO comprobante (rfc_Emisor,rfc_Receptor,folio,serie,fecha,tipoComprobante,exportacion,noCertificado,moneda,formaPago,metodoPago,selloDigitalCFDI,selloDigitalSAT,cadenaOriginalComplemento,subtotal,estado) values ('$rfcEmisor','$rfcReceptor','$folioFiscal','$noSerie','$fechaYHora','$efectoComprobante','$exportacion','$noCertificadoSAT','$moneda','$formaPago','$metodoPago','$selloDigitalCFDI','$selloDigitalSAT','$cadenaOriginalComplemento','$subtotal','1');";  
+    $resultado = Ejecutar($conexion, $consulta);
+    if ($resultado) {
+        $ultimoID = mysqli_insert_id($conexion);
+        // Insertamos los datos en la tabla conceptos (los que tienen //c)
+        $consulta = "INSERT INTO conceptos (claveProdServ,noIdentificacion,claveUnidad,unidad,valorUnitario,importe,descuento,objetoImp,rfcProveedorCertificacion,descripcion,cantidad) values ('$claveProdServ','$noIdentificacion','$claveUnidad','$unidad','$valorUnitario','$importe','$descuento','$objetoImpuesto','$rfcProveedorCertificacion','$descripcion','$cantidad');";
+        $resultado = Ejecutar($conexion, $consulta);
+        if ($resultado) {
+            $consulta = "INSERT INTO comprobante_conceptos (idComprobante,claveProdServ) values ('$ultimoID','$claveProdServ');";
+        }
+    }
+    
+
+
+}
+
+
+
+// Aquí puedes mostrar el contenido de la página principal
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generar Factura</title>
+  <title>Generar Factura</title>
 </head>
 <body>
-    <h1>Generar Factura</h1>
+
+<?php if (isset($user_rfc)) { ?>
+    <p>Bienvenido, <?php echo $user_rfc; ?></p>
+  <?php } ?>
+  <h1>Generar Factura</h1>
     <form action="" method="post">
         <h2>Datos de emisor</h2>
         <label for="rfcEmisor">RFC del emisor:</label>
+
+        <?php if ($tipo_usuario == "U") { ?>
+          <input type="text" name="rfcEmisor" id="rfcEmisor" placeholder="RFC del emisor" value="<?php echo $user_rfc; ?>" readonly>
+        <?php } else { ?>
         <input type="text" name="rfcEmisor" id="rfcEmisor" placeholder="RFC del emisor" required>
-        <br>
-        <label for="nombreEmisor">Nombre del emisor:</label>
-        <input type="text" name="nombreEmisor" id="nombreEmisor" placeholder="Nombre del emisor" required>
+        <?php } ?>
         <br>
         <h2>Datos de receptor</h2>
         <label for="rfcReceptor">RFC del receptor:</label>
         <input type="text" name="rfcReceptor" id="rfcReceptor" placeholder="RFC del receptor" required>
         <br>
-        <label for="nombreReceptor">Nombre del receptor:</label>
-        <input type="text" name="nombreReceptor" id="nombreReceptor" placeholder="Nombre del receptor" required>
-        <br>
-        <label for="codigoPostalReceptor">Codigo postal del receptor</label>
-        <input type="number" name="codigoPostalReceptor" id="codigoPostalReceptor" placeholder="Codigo postal del receptor" required>
-        <br>
-        <label for="regimenFiscalReceptor">Regimen fical del receptor</label>
-        <input type="text" name="regimenFiscalReceptor" id="regimenFiscalReceptor" placeholder="Regimen fiscal del receptor" required>
-        <br>
         <h2>Datos de emision</h2>
-        <label for="usoCFDI">Uso CFDI:</label>
-        <input type="text" name="usoCFDI" id="usoCFDI" placeholder="Uso CFDI" required>
-        <br>
         <label for="folioFiscal">Folio fiscal:</label>
         <input type="text" name="folioFiscal" id="folioFiscal" placeholder="Folio fiscal" required>
         <br>
         <label for="noSerie">No. de Serie del CSD:</label>
         <input type="number" name="noSerie" id="noSerie" placeholder="No. de Serie del CSD" required>
         <br>
-        <label for="codigoPostalEmision">Codigo postal de emision:</label>
-        <input type="number" name="codigoPostalEmision" id="codigoPostalEmision" placeholder="Codigo postal de emision" required>
-        <br>
         <label for="fechaYHora">Fecha y hora de emision:</label>
         <input type="datetime-local" name="fechaYHora" id="fechaYHora" placeholder="Fecha y hora de emision" required>
         <br>
         <label for="efectoComprobante">Efecto de comprobante:</label>
         <input type="text" name="efectoComprobante" id="efectoComprobante" placeholder="Efecto de comprobante" required>
-        <br>
-        <label for="regimenFiscal">Regimen fiscal:</label>
-        <input type="text" name="regimenFiscal" id="regimenFiscal" placeholder="Regimen fiscal" required>
         <br>
         <label for="exportacion">Exportacion:</label>
         <input type="text" name="exportacion" id="exportacion" placeholder="Exportacion" required>
@@ -60,6 +119,9 @@
         <label for="noIdentificacion">No. de identificacion (opcional):</label>
         <input type="text" name="noIdentificacion" id="noIdentificacion" placeholder="No. de identificacion (opcional)">
         <br>
+        <label for="cantidad">Cantidad:</label>
+        <input type="number" name="cantidad" id="cantidad" placeholder="Cantidad" required>
+        <br>
         <label for="claveUnidad">Clave de unidad:</label>
         <input type="text" name="claveUnidad" id="claveUnidad" placeholder="Clave de unidad" required>
         <br>
@@ -67,7 +129,7 @@
         <input type="text" name="unidad" id="unidad" placeholder="Unidad" required>
         <br>
         <label for="valorUnitario">Valor unitario:</label>
-        <input type="number" name="valorUnitario" id="valorUnitario" placeholder="Valor unitario" required>
+        <input type="decimal" name="valorUnitario" id="valorUnitario" placeholder="Valor unitario" required>
         <br>
         <label for="importe">Importe:</label>
         <input type="number" name="importe" id="importe" placeholder="Importe" required>
@@ -105,13 +167,12 @@
         <label for="cadenaOriginalComplemento">Cadena original del complemento de certificacion digital del SAT:</label>
         <input type="text" name="cadenaOriginalComplemento" id="cadenaOriginalComplemento" placeholder="Cadena original del complemento de certificacion digital del SAT" required>
         <br>
-        <label for="objetoImpuesto">Objeto impuesto:</label>
-        <input type="text" name="objetoImpuesto" id="objetoImpuesto" placeholder="Objeto impuesto" required>
+        <label for="subtotal">Subtotal:</label>
+        <input type="number" name="subtotal" id="subtotal" placeholder="Subtotal" required>
         <br>
         <input type="submit" value="Generar">
-
-
-
     </form>
+    <!-- boton para regresar cerrar sesion -->
+    <a href="logout.php">Cerrar sesión</a>
 </body>
 </html>
