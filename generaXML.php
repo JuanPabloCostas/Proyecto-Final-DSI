@@ -1,5 +1,4 @@
 <?php
-
 function crearXML($ultimo_id){
 include("conexion.php");
 $con = Conectar();
