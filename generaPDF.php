@@ -1,9 +1,8 @@
 <?php
-
 function crearPDF($ultimo_id){
     include("conexion.php");
     $con = Conectar();
-    $sql = "SELECT * FROM vistaPDF WHERE id_comprobante = ultimo_id;";
+    $sql = "SELECT * FROM vistaPDF WHERE id_comprobante = $ultimo_id;";
     $result = Ejecutar($con, $sql);
     $registro =mysqli_fetch_array($result, MYSQLI_ASSOC);
     Desconectar($con);
@@ -29,7 +28,7 @@ function crearPDF($ultimo_id){
     $pdf->SetXY(13.5,3);
     $pdf->Cell(4.5,1,$registro["fecha"],0,1,'L');/////////////////////////////Revisar
     $pdf->Cell(3,1,'Nombre Receptor:',0,0,'L');
-    $pdf->Cell(5.5,1,$registro["nombre_Receptor"],0,0,'L');
+    $pdf->Cell(5.5,1,$registro["nombre_receptor"],0,0,'L');
     $pdf->Cell(4,1,'Efecto de Comprobante:',0,0,'L');
     $pdf->Cell(4.5,1,$registro["tipoComprobante"],0,1,'L');
     $pdf->MultiCell(3,.5,'Codigo postal del receptor:',0,0,'L');
@@ -96,15 +95,15 @@ function crearPDF($ultimo_id){
     $pdf->SetFont('Arial','',6);
     $pdf->Cell(5,1,'Sello digital del CFDI:',0,1,'L');
     $pdf->SetFillColor(255,255,255);
-    $pdf->MultiCell(19.5,1.5,''."",0,1,'L');
+    $pdf->MultiCell(19.5,1.5,$registro["selloDigitalCFDI"],0,1,'L');
     $pdf->SetY(19.5);
     $pdf->Cell(5,1,'Sello digital del SAT:',0,1,'L');
-    $pdf->MultiCell(19.5,1.5,''."",0,1,'L');
-    $pdf->Image('QR.png',1,22.5,4,4,'PNG');//Image(ruta,coordenada x,coordenada y,ancho,alto,tipo de imagen)
+    $pdf->MultiCell(19.5,1.5,''.$registro["selloDigitalSAT"],0,1,'L');
+//$pdf->Image('QR.png',1,22.5,4,4,'PNG');//Image(ruta,coordenada x,coordenada y,ancho,alto,tipo de imagen)
     $pdf->SetXY(5,22);
     $pdf->Cell(8.5,1,'Cadena original del complemento de certificacion digital del SAT:',0,1,'L');
     $pdf->SetX(5);
-    $pdf->MultiCell(15.5,1.8,''."",0,1,'L');
+    $pdf->MultiCell(15.5,1.8,$registro["cadenaOriginalComplemento"],0,1,'L');
     $pdf->SetXY(5,24.8);
     $pdf->Cell(4,1,'RFC del proveedor de certificacion:',0,0,'L');
     $pdf->Cell(4,1,''."",0,0,'L');
@@ -120,7 +119,9 @@ function crearPDF($ultimo_id){
     $pdf->SetX(17.5);
     $pdf->Cell(3,1,'Pagina 1 de 1',0,0,'R');
 
-    $pdf->Output();
+    $nombreGuardado =  $ultimo_id . '.pdf';
 
+    $pdf->Output($nombreGuardado,'F');
 }
+
 ?>
