@@ -91,6 +91,6 @@ function generateXML(result) {
     var formattedXmlString = xmlString.replace(/></g, '>\n<');
 
     var blob = new Blob([formattedXmlString], { type: 'text/xml' });
-    nombreArchivo = "C:/xampp/htdocs/DSI30/" + result[0].id_Comprobante + ".xml";
+    nombreArchivo = "C:/xampp/htdocs/facturas/files/" + result[0].id_Comprobante + ".xml";
     saveAs(blob, nombreArchivo);
 }
