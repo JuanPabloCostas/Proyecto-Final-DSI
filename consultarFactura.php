@@ -76,7 +76,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <p class="rfc">Bienvenido, <?php echo $user_rfc; ?></p>
     <?php } ?>
   <ul>
-    <li><a href="generarFactura.php">Generar factura</a></li>
+    <?php if ($tipo_usuario == "U") { ?>
+      <li><a href="generarFactura.php">Generar factura</a></li>
+    <?php } ?>
     <li><a href="cancelarFactura.php">Cancelar factura</a></li>
     <li><a href="consultarFactura.php">Consultar factura</a></li>
     <li class="right"><a href="logout.php">Cerrar sesión</a></li>

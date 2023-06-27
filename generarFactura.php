@@ -3,7 +3,7 @@ include("conexion.php");
 session_start();
 
 // Verificar si el usuario no ha iniciado sesión y redirigirlo a la página de inicio de sesión
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id']) || $_SESSION['tipo_usuario'] == 'A') {
   header("Location: login.php");
   exit();
 }
