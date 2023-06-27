@@ -27,13 +27,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $efectoComprobante = $_POST['efectoComprobante']; //a
     $exportacion = $_POST['exportacion']; //a
     $noCertificadoSAT = $_POST['noCertificadoSAT']; //a
-    $moneda = $_POST['moneda'];
-    $formaPago = $_POST['formaPago'];
-    $metodoPago = $_POST['metodoPago'];
-    $selloDigitalCFDI = $_POST['selloDigitalCFDI'];
-    $selloDigitalSAT = $_POST['selloDigitalSAT'];
-    $cadenaOriginalComplemento = $_POST['cadenaOriginalComplemento'];
-    $subtotal = $_POST['subtotal'];
+    $moneda = $_POST['moneda']; //a
+    $formaPago = $_POST['formaPago']; //a
+    $metodoPago = $_POST['metodoPago']; //a
+    $selloDigitalCFDI = $_POST['selloDigitalCFDI']; //a
+    $selloDigitalSAT = $_POST['selloDigitalSAT']; //a
+    $cadenaOriginalComplemento = $_POST['cadenaOriginalComplemento']; //a
+    $subtotal = $_POST['subtotal']; //a
 
     $claveProdServ = $_POST['claveProdServ']; //c
     $noIdentificacion = $_POST['noIdentificacion']; //c
