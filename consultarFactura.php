@@ -20,10 +20,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $valor = $_POST['valor'];
     $fecha = $_POST['fecha'];
     if ($tipo_usuario == 'A') {
-        $consulta = "SELECT id_comprobante, rfc_Emisor, rfc_Receptor, fecha, subtotal FROM comprobante WHERE ($filtro = '$valor' or DATE(fecha) = DATE('$fecha')) and estado = 1; ";
+        $consulta = "SELECT c.id_comprobante, c.rfc_Emisor, c.rfc_Receptor, c.fecha, c.subtotal, cc.claveProdServ FROM comprobante c, comprobante_conceptos cc WHERE c.id_comprobante = cc.id_comprobante AND (c.$filtro = '$valor' OR DATE(c.fecha) = DATE('$fecha')) AND c.estado = 1;";
+
         // $consulta = "SELECT rfc_ FROM comprobante WHERE $filtro = '$valor' or fecha = '$fecha' and estado = 1;";
     } else {
-        $consulta = "SELECT id_comprobante, rfc_Emisor, rfc_Receptor, fecha, subtotal FROM comprobante WHERE ($filtro = '$valor' or DATE(fecha) = DATE('$fecha')) AND rfc_Emisor = '$user_rfc' and estado = 1;";
+        $consulta = "SELECT c.id_comprobante, c.rfc_Emisor, c.rfc_Receptor, c.fecha, c.subtotal, cc.claveProdServ FROM comprobante c, comprobante_conceptos cc WHERE c.id_comprobante = cc.id_comprobante AND (c.$filtro = '$valor' OR DATE(c.fecha) = DATE('$fecha')) AND c.rfc_Emisor = '$user_rfc' AND c.estado = 1;";
+
     }
 
     $resultado = Ejecutar($conexion, $consulta);
@@ -33,6 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($numFilas > 0) {
             echo "<table border='1'>";
             echo "<tr>";
+            echo "<th>ID Comprobante</th>";
+            echo "<th>Clave de producto o servicio</th>";
             echo "<th>RFC Emisor</th>";
             echo "<th>RFC Receptor</th>";
             echo "<th>Fecha</th>";
@@ -42,14 +46,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "</tr>";
             while ($fila = mysqli_fetch_array($resultado)) {
                 echo "<tr>";
+                echo "<td>" . $fila['id_comprobante'] . "</td>";
+                echo "<td>" . $fila['claveProdServ'] . "</td>";
                 echo "<td>" . $fila['rfc_Emisor'] . "</td>";
                 echo "<td>" . $fila['rfc_Receptor'] . "</td>";
                 echo "<td>" . $fila['fecha'] . "</td>";
                 echo "<td>" . $fila['subtotal'] . "</td>";
-                echo "<td><a href='files/{$fila['id_comprobante']}.pdf' download>Descargar PDF</a></td>";
-                echo "<td><a href='files/{$fila['id_comprobante']}.xml' download>Descargar XML</a></td>";
+                echo "<td><a href='files/{$fila['id_comprobante']}_{$fila['claveProdServ']}.pdf' download>Descargar PDF</a></td>";
+                echo "<td><a href='files/{$fila['id_comprobante']}_{$fila['claveProdServ']}.xml' download>Descargar XML</a></td>";
                 echo "</tr>";
             }
+            
             echo "</table>";
         } else {
             echo "No se encontraron resultados";

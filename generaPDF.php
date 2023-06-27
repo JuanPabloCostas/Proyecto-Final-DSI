@@ -78,7 +78,7 @@ function crearPDF($registro){
     $pdf->Cell(5,1,'Moneda:',0,0,'L');
     $pdf->Cell(4,1,$registro["moneda"],0,0,'L');
     $pdf->Cell(5,1,'Subtotal:',0,0,'L');
-    $pdf->Cell(5.5,1,$registro["moneda"],0,1,'R');
+    $pdf->Cell(5.5,1,$registro["subtotal"],0,1,'R');
     $pdf->Cell(5,1,'Forma de pago:',0,0,'L');
     $pdf->Cell(4,1,$registro["formaPago"],0,0,'L');
     $pdf->Cell(5,1,'Total:',0,0,'L');
@@ -114,7 +114,7 @@ function crearPDF($registro){
     $pdf->SetX(17.5);
     $pdf->Cell(3,1,'Pagina 1 de 1',0,0,'R');
 
-    $nombreGuardado =   "files/".$registro["id_comprobante"] . '.pdf';
+    $nombreGuardado =   "files/".$registro["id_comprobante"] . "_" . $registro["claveProdServ_Concepto"] . '.pdf';
 
     $pdf->Output($nombreGuardado,'F');
 }

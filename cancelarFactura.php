@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     include("conexion.php");
     $conexion = Conectar();
     $idComprobante = $_POST['idComprobante'];
+    
     if ($tipo_usuario == 'A'){
         $consulta = "UPDATE comprobante SET estado = 0 WHERE id_comprobante = '$idComprobante';";
     } else {
@@ -25,11 +26,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $resultado = Ejecutar($conexion, $consulta);
     if ($resultado) {
-      if (rename('files/'.$idComprobante.'.xml', 'files/Eliminados/'.$idComprobante.'.xml') && rename('files/'.$idComprobante.'.pdf', 'files/Eliminados/'.$idComprobante.'.pdf')) {
-        echo "File '{$idComprobante}' movido desde files a files/Eliminados.";
-      } else {
-        echo "Falla en mover archivo";
+      // Lista todos los archivos que comienzan con el idComprobante.
+      $filesXML = glob('files/'.$idComprobante.'*.xml');
+      $filesPDF = glob('files/'.$idComprobante.'*.pdf');
+
+      $allMovedSuccessfully = true;
+
+      foreach ($filesXML as $file) {
+          $fileName = basename($file);
+          $moved = rename('files/'.$fileName, 'files/Eliminados/'.$fileName);
+
+          if (!$moved) {
+              echo "No se pudo mover el archivo '{$fileName}' a 'files/Eliminados/'.";
+              $allMovedSuccessfully = false;
+          }
       }
+
+      foreach ($filesPDF as $file) {
+          $fileName = basename($file);
+          $moved = rename('files/'.$fileName, 'files/Eliminados/'.$fileName);
+
+          if (!$moved) {
+              echo "No se pudo mover el archivo '{$fileName}' a 'files/Eliminados/'.";
+              $allMovedSuccessfully = false;
+          }
+      }
+
+      if ($allMovedSuccessfully) {
+          echo "Todos los archivos que comienzan con '{$idComprobante}' se movieron desde 'files/' a 'files/Eliminados/'.";
+      }
+
       echo "Factura eliminada correctamente";
     } else {
         echo "Error al eliminar la factura";

@@ -77,7 +77,7 @@ $xmlString = $doc->saveXML();
 $formattedXmlString = preg_replace('/></', ">\n<", $xmlString);
 
 // Create a new XML file
-$nombreArchivo = "files/".$registro['id_comprobante'] . ".xml";
+$nombreArchivo = "files/".$registro['id_comprobante'] . "_" . $registro['claveProdServ_Concepto'] . ".xml";
 file_put_contents($nombreArchivo, $formattedXmlString);
 }
 ?>
