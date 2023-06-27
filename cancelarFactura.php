@@ -25,7 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $resultado = Ejecutar($conexion, $consulta);
     if ($resultado) {
-        echo "Factura eliminada correctamente";
+      if (rename('files/'.$idComprobante.'.xml', 'files/Eliminados/'.$idComprobante.'.xml') && rename('files/'.$idComprobante.'.pdf', 'files/Eliminados/'.$idComprobante.'.pdf')) {
+        echo "File '{$idComprobante}' movido desde files a files/Eliminados.";
+      } else {
+        echo "Falla en mover archivo";
+      }
+      echo "Factura eliminada correctamente";
     } else {
         echo "Error al eliminar la factura";
     }
