@@ -57,13 +57,13 @@ $complemento = $doc->createElement("cfdi:Complemento");
 $timbre = $doc->createElement("tfd:TimbreFiscalDigital");
 $timbre->setAttribute("xmlns:tfd", "http://www.sat.gob.mx/TimbreFiscalDigital");
 $timbre->setAttribute("xsi:schemaLocation", "http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/timbrefiscaldigital/TimbreFiscalDigitalv11.xsd");
-$timbre->setAttribute("Version", "");
+$timbre->setAttribute("Version", $registro['version']?? "");
 $timbre->setAttribute("UUID", "");
 $timbre->setAttribute("FechaTimbrado", "");
-$timbre->setAttribute("RfcProvCertif", "");
-$timbre->setAttribute("SelloCFD", "");
-$timbre->setAttribute("NoCertificadoSAT", "");
-$timbre->setAttribute("SelloSAT", "");
+$timbre->setAttribute("RfcProvCertif", $registro['rfcProveedorCertificacion ']?? "");
+$timbre->setAttribute("SelloCFD", $registro['selloDigitalCFDI']?? "");
+$timbre->setAttribute("NoCertificadoSAT", $registro['noCertificado']?? "");
+$timbre->setAttribute("SelloSAT", $registro['selloDigitalSAT']?? "");
 $complemento->appendChild($timbre);
 $comprobante->appendChild($complemento);
 
@@ -77,7 +77,7 @@ $xmlString = $doc->saveXML();
 $formattedXmlString = preg_replace('/></', ">\n<", $xmlString);
 
 // Create a new XML file
-$nombreArchivo = $registro['id_comprobante'] . ".xml";
+$nombreArchivo = "files/".$registro['id_comprobante'] . ".xml";
 file_put_contents($nombreArchivo, $formattedXmlString);
 }
 ?>

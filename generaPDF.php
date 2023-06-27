@@ -114,7 +114,7 @@ function crearPDF($registro){
     $pdf->SetX(17.5);
     $pdf->Cell(3,1,'Pagina 1 de 1',0,0,'R');
 
-    $nombreGuardado =  $registro["id_comprobante"] . '.pdf';
+    $nombreGuardado =   "files/".$registro["id_comprobante"] . '.pdf';
 
     $pdf->Output($nombreGuardado,'F');
 }
